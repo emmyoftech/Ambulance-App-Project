@@ -22,7 +22,7 @@ public class authFragment extends Fragment {
     public static authFragment newInstance(String data) {
         authFragment fragment = new authFragment();
         Bundle args = new Bundle();
-        args.putString(AppDataFromMain, data);
+
         fragment.setArguments(args);
         return fragment;
     }
@@ -37,7 +37,7 @@ public class authFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View fragRootView = inflater.inflate(R.layout.fragment_auth, container, false);
-        new authMain(fragRootView);
+        new authMain(fragRootView, requireContext());
         return fragRootView;
     }
 }
