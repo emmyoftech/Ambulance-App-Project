@@ -9,6 +9,11 @@
     <string name="get_phn_number">Phone Number</string>
     <string name="get_user_name">Username</string>
     <string name="get_pass">Password</string>
+    <string name="pass_req_1">Must be 6 characters or more</string>
+    <string name="pass_req_2">Must hava at least one number</string>
+    <string name="pass_req_3">Must have at least one symbol</string>
     <string name="con_pass">Confirm password</string>
+    <string name="usernameErrMsg">"Username cannot be less than 4 or more than 10 characters"</string>
     <string name="nxt">next</string>
+    <string name="code_log_title_text">login details</string>
 </resources>
