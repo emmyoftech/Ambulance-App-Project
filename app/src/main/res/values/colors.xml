@@ -3,6 +3,8 @@
     <color name="primary">#D42C2C</color>
     <color name="secondary">#f0f0f0</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="black">#000000</color>
     <color name="pal_green">#41cc46</color>
     <color name="pal_blue">#5198f1</color>
+    <color name="pal_pink">#FFF6F4</color>
 </resources>
