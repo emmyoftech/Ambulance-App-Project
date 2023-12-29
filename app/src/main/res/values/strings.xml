@@ -3,7 +3,7 @@
     <string name="select_user_type_head_text">select dashboard</string>
     <string name="admin_name">admin</string>
     <string name="user_name">user</string>
-    <string name="reg_pre_text">register as </string>
+    <string name="reg_pre_text">register as</string>
     <string name="get_fir_name">First name</string>
     <string name="get_las_name">Last name</string>
     <string name="get_phn_number">Phone Number</string>
@@ -16,4 +16,7 @@
     <string name="usernameErrMsg">"Username cannot be less than 4 or more than 10 characters"</string>
     <string name="nxt">next</string>
     <string name="code_log_title_text">login details</string>
+    <string name="empty_field_msg">This field cannot be empty</string>
+    <string name="invalid_phn_num_text">Invalid Phone Number</string>
+    <string name="invalid_text">Invalid</string>
 </resources>

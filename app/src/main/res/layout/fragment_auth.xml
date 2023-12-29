@@ -125,6 +125,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="25dp"
+            android:textAllCaps="true"
             android:fontFamily="@font/anton"
             android:textAlignment="center"
             android:textSize="25sp" />
@@ -155,6 +156,14 @@
                     android:paddingHorizontal="15dp" />
             </androidx.cardview.widget.CardView>
 
+            <TextView
+                android:id="@+id/fir_err_msg_holder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="@color/primary"
+                />
+
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -171,6 +180,14 @@
                     android:inputType="text"
                     android:paddingHorizontal="15dp" />
             </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/las_err_msg_holder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="@color/primary"
+                />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -189,6 +206,14 @@
                     android:paddingHorizontal="15dp" />
 
             </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/phn_err_msg_holder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="@color/primary"
+                />
         </LinearLayout>
 
         <!--   REGISTRATION PART 2     -->
@@ -225,35 +250,21 @@
                 android:layout_gravity="bottom"
                 />
 
-            <LinearLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
+                android:id="@id/password_holder"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="310dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="10dp"
-                    app:cardCornerRadius="10dp">
-
-                    <EditText
-                        android:id="@+id/password_holder"
-                        android:layout_width="match_parent"
-                        android:layout_height="48sp"
-                        android:background="@color/secondary"
-                        android:backgroundTint="@color/secondary"
-                        android:hint="@string/get_pass"
-                        android:inputType="textPassword"
-                        android:paddingHorizontal="15dp"/>
-                </androidx.cardview.widget.CardView>
-                <ImageView
-                    android:id="@+id/pass_viewer"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/ic_eye_open"
-                    android:layout_gravity="center_vertical"
-                    android:layout_margin="5dp"/>
-            </LinearLayout>
+                app:boxBackgroundColor="@color/secondary"
+                app:passwordToggleEnabled="true"
+                app:boxCornerRadiusTopEnd="10dp"
+                app:boxCornerRadiusTopStart="10dp"
+                app:boxCornerRadiusBottomEnd="10dp"
+                app:boxCornerRadiusBottomStart="10dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:inputType="textPassword"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:id="@+id/pass_req1"
@@ -303,7 +314,7 @@
                         android:background="@color/secondary"
                         android:backgroundTint="@color/secondary"
                         android:hint="@string/con_pass"
-                        android:inputType="text"
+                        android:inputType="textPassword"
                         android:paddingHorizontal="15dp" />
                 </androidx.cardview.widget.CardView>
 

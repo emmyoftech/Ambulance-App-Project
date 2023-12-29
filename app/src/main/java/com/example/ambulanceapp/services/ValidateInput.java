@@ -22,7 +22,7 @@ public class ValidateInput {
             if(inpValue.charAt(0) != '0'){
                 ValidateInput.ErrMsgHandler(edtext, ": didnt start with 0: " + inpValue, false);
                 val = false;
-            }else if(inpValue.length() < 11){
+            }else if(inpValue.length() != 11){
                 ValidateInput.ErrMsgHandler(edtext, ": is less than 11: " + inpValue, false);
                 return false;
             }
@@ -60,17 +60,18 @@ public class ValidateInput {
         }
     }
     public static int passwordValidLevel (String pass){
+        // TODO: fix password validity visuals
         Pattern patternNum = Pattern.compile(ValidateInput.regexAtleastNumber),
                 patternSym = Pattern.compile(ValidateInput.regexAtleastSymbol);
         Matcher matcherNum = patternNum.matcher(pass),
                 matcherSym = patternSym.matcher(pass);
         int level;
-        if(pass.length() >= 6){
-            level = 1;
-        } else if (matcherNum.matches() && pass.length() >= 6) {
-            level = 2;
-        }else if (matcherNum.matches() && pass.length() >= 6 && matcherSym.matches()){
+        if(matcherSym.matches()){
             level = 3;
+        } else if (matcherNum.matches()) {
+            level = 2;
+        }else if (pass.length() >= 6){
+            level = 1;
         }else {
             level = 0;
         }
