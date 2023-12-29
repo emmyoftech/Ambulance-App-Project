@@ -10,8 +10,8 @@ public class ValidateInput {
     public static String FAILED_MSG = "null";
 
     public static String regexAtleastNumber = ".*\\d+.*";
-    public static String regexAtleastSymbol = "[!@#$%^&*()_+\\-=\\[\\]{};':\",./<>?]";
-    public static String regexfullvalidation = "^(?=.*[0-9])(?=.*[^a-zA-Z0-9\\s]).+$\n";
+    public static String regexAtleastSymbol = ".*[!@#$%^&*()_+{}\\[\\]:;<>,.?~\\\\-].*";
+    public static String regexfullvalidation = "^(?=.*[0-9])(?=.*[^a-zA-Z0-9\\s]).+$";
     public static boolean isInputEmpty (EditText edtext){
         return  edtext.getText().toString().isEmpty();
     }
@@ -58,24 +58,6 @@ public class ValidateInput {
         }else {
             return true;
         }
-    }
-    public static int passwordValidLevel (String pass){
-        // TODO: fix password validity visuals
-        Pattern patternNum = Pattern.compile(ValidateInput.regexAtleastNumber),
-                patternSym = Pattern.compile(ValidateInput.regexAtleastSymbol);
-        Matcher matcherNum = patternNum.matcher(pass),
-                matcherSym = patternSym.matcher(pass);
-        int level;
-        if(matcherSym.matches()){
-            level = 3;
-        } else if (matcherNum.matches()) {
-            level = 2;
-        }else if (pass.length() >= 6){
-            level = 1;
-        }else {
-            level = 0;
-        }
-        return level;
     }
     public static boolean ispasswordConfirmed (EditText orgPassHolder, EditText conPassHolder){
         return orgPassHolder.getText().toString().equals(conPassHolder.getText().toString());

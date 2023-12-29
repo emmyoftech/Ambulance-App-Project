@@ -12,6 +12,7 @@ import com.example.ambulanceapp.R;
 import com.example.ambulanceapp.services.AppData;
 import com.example.ambulanceapp.services.CustomListener;
 import com.example.ambulanceapp.services.ValidateInput;
+import com.google.android.material.textfield.TextInputEditText;
 
 public class authMain {
     private final View authView;
@@ -94,14 +95,11 @@ public class authMain {
 
         // textfiels
         EditText usernameHolder = authView.findViewById(R.id.user_name_holder);
-        EditText passwordHolder = authView.findViewById(R.id.password_holder);
-        EditText conpassHolder = authView.findViewById(R.id.con_pass_holder);
+        TextInputEditText passwordHolder = authView.findViewById(R.id.password_holder);
+        TextInputEditText conpassHolder = authView.findViewById(R.id.con_pass_holder);
         // err msg holders
         TextView userErrMsgHolder = authView.findViewById(R.id.user_name_err_msg_field);
         TextView conpassErrMsgHolder = authView.findViewById(R.id.con_pass_err_msg_field);
-        // img buttons
-//        ImageView passwordViewer = authView.findViewById(R.id.pass_viewer);
-        ImageView conpassViewer = authView.findViewById(R.id.con_pass_viewer);
         // password requirements fields
         TextView passreq1 = authView.findViewById(R.id.pass_req1);
         TextView passreq2 = authView.findViewById(R.id.pass_req2);
@@ -113,8 +111,6 @@ public class authMain {
         regstage2Form.setVisibility(View.VISIBLE);
         service.button_unclickable(submitButton);
 
-        passwordViewer.setOnClickListener(v -> service.passwordViewer(passwordHolder, passwordViewer));
-        conpassViewer.setOnClickListener(v -> service.passwordViewer(conpassHolder, conpassViewer));
         CustomListener.onInput(usernameHolder, (e)-> service.usernameValidInputEvent(usernameHolder, userErrMsgHolder,() -> form2InputChecker(usernameHolder, passwordHolder, conpassHolder)));
         CustomListener.onInput(passwordHolder, (e)-> service.passwordValidInputEvent(passwordHolder,passreq1,passreq2,passreq3, ()-> form2InputChecker(usernameHolder, passwordHolder, conpassHolder)));
         CustomListener.onInput(conpassHolder , (e) -> service.con_passwordValidInputEvent(passwordHolder, conpassHolder, conpassErrMsgHolder, () -> form2InputChecker(usernameHolder, passwordHolder, conpassHolder)));

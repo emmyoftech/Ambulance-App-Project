@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:orientation="vertical"
-        android:visibility="gone"
+        android:visibility="visible"
         >
 
         <TextView
@@ -106,7 +106,7 @@
         android:layout_marginHorizontal="20dp"
         android:orientation="vertical"
         android:layout_centerInParent="true"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <androidx.cardview.widget.CardView
             android:layout_width="120dp"
@@ -136,14 +136,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="gone"
+            android:visibility="visible"
             >
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="10dp"
-                app:cardCornerRadius="20dp">
+                app:cardCornerRadius="10dp">
 
                 <EditText
                     android:id="@+id/fir_name_holder"
@@ -168,7 +168,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="10dp"
-                app:cardCornerRadius="20dp">
+                app:cardCornerRadius="10dp">
 
                 <EditText
                     android:id="@+id/las_name_holder"
@@ -193,7 +193,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="10dp"
-                app:cardCornerRadius="20dp">
+                app:cardCornerRadius="10dp">
 
                 <EditText
                     android:id="@+id/phn_holder"
@@ -222,7 +222,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -252,7 +252,6 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:id="@id/password_holder"
                 android:layout_height="wrap_content"
                 app:boxBackgroundColor="@color/secondary"
                 app:passwordToggleEnabled="true"
@@ -260,10 +259,13 @@
                 app:boxCornerRadiusTopStart="10dp"
                 app:boxCornerRadiusBottomEnd="10dp"
                 app:boxCornerRadiusBottomStart="10dp">
+
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/password_holder"
                     android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:inputType="textPassword"/>
+                    android:layout_height="55dp"
+                    android:inputType="textPassword"
+                    android:hint="@string/get_pass"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
@@ -296,37 +298,23 @@
                 android:layout_marginHorizontal="20dp"
                 />
 
-            <LinearLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                app:passwordToggleEnabled="true"
+                app:boxBackgroundColor="@color/secondary"
+                app:boxCornerRadiusTopEnd="10dp"
+                app:boxCornerRadiusTopStart="10dp"
+                app:boxCornerRadiusBottomEnd="10dp"
+                app:boxCornerRadiusBottomStart="10dp">
 
-                <androidx.cardview.widget.CardView
-                    android:layout_width="310dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="10dp"
-                    app:cardCornerRadius="10dp">
-
-                    <EditText
-                        android:id="@+id/con_pass_holder"
-                        android:layout_width="match_parent"
-                        android:layout_height="48sp"
-                        android:background="@color/secondary"
-                        android:backgroundTint="@color/secondary"
-                        android:hint="@string/con_pass"
-                        android:inputType="textPassword"
-                        android:paddingHorizontal="15dp" />
-                </androidx.cardview.widget.CardView>
-
-                <ImageView
-                    android:id="@+id/con_pass_viewer"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/ic_eye_open"
-                    android:layout_gravity="center_vertical"
-                    android:layout_margin="5dp"/>
-
-            </LinearLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/con_pass_holder"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:inputType="textPassword"
+                    android:hint="@string/con_pass"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:id="@+id/con_pass_err_msg_field"
@@ -344,6 +332,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/nxt"
+            android:backgroundTint="@color/primary"
             android:textAllCaps="true"
             android:layout_marginTop="30dp"
             android:textSize="17sp"/>

@@ -9,9 +9,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import com.example.ambulanceapp.R;
 import com.example.ambulanceapp.interfaces.PassedFunction;
 import com.example.ambulanceapp.services.ValidateInput;
+import com.google.android.material.textfield.TextInputEditText;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Auth_service {
 
@@ -58,28 +64,36 @@ public class Auth_service {
         }
         finalValidation.run();
     }
-    public void passwordValidInputEvent(EditText editText, TextView req1, TextView req2, TextView req3, PassedFunction finalValidation){
-        int valLevel = ValidateInput.passwordValidLevel(editText.getText().toString());
-        req2.setText(Integer.toString(valLevel));
-        switch (valLevel){
-            case 1:
-                reqPassShow(req1, true);
-                break;
-            case 2:
-                reqPassShow(req2, true);
-                break;
-            case 3:
-                reqPassShow(req3, true);
-                break;
-            default:
-                reqPassShow(req1, false);
-                reqPassShow(req2, false);
-                reqPassShow(req3, false);
-                break;
+    public void passwordValidInputEvent(@NonNull TextInputEditText editText, TextView req1, TextView req2, TextView req3, PassedFunction finalValidation){
+        String pass = editText.getText().toString();
+
+        Pattern patternNum = Pattern.compile(ValidateInput.regexAtleastNumber),
+                patternSym = Pattern.compile(ValidateInput.regexAtleastSymbol);
+        Matcher matcherNum = patternNum.matcher(pass),
+                matcherSym = patternSym.matcher(pass);
+
+        if(pass.length() >= 6){
+            reqPassShow(req1, true);
+        }else{
+            reqPassShow(req1, false);
         }
+
+        if(matcherNum.matches()){
+            reqPassShow(req2, true);
+        }else{
+            reqPassShow(req2, false);
+        }
+
+        if(pass.matches(ValidateInput.regexAtleastSymbol)){
+            reqPassShow(req3, true);
+        }else{
+            reqPassShow(req3, false);
+            Toast.makeText(authContext, pass, Toast.LENGTH_SHORT).show();
+        }
+
         finalValidation.run();
     }
-    public void con_passwordValidInputEvent (EditText orgeditText, EditText editText, TextView err_msg, PassedFunction finalValidation){
+    public void con_passwordValidInputEvent (TextInputEditText orgeditText, TextInputEditText editText, TextView err_msg, PassedFunction finalValidation){
         if(ValidateInput.ispasswordConfirmed(orgeditText, editText)){
             err_msg.setText("");
         } else if (ValidateInput.isInputEmpty(editText)) {
