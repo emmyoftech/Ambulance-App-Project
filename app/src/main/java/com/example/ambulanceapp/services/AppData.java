@@ -20,6 +20,13 @@ public class AppData {
     public String getUserType(){
         return preferences.getString("USER_TYPE", null);
     }
+    public boolean ifloggedInBefore (){
+        return preferences.getBoolean("USER_LOOGED_IN_BEFORE", false);
+    }
+    public void setLoggedInBefore(boolean islogged){
+        editPref.putBoolean("USER_LOOGED_IN_BEFORE", islogged);
+        editPref.commit();
+    }
     public void setUserType(String state){
         editPref.putString("USER_TYPE", state);
         editPref.apply();

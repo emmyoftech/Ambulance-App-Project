@@ -1,11 +1,8 @@
 package com.example.ambulanceapp.authpkg;
 
 import android.content.Context;
-import android.text.InputType;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,6 +10,7 @@ import androidx.annotation.NonNull;
 
 import com.example.ambulanceapp.R;
 import com.example.ambulanceapp.interfaces.PassedFunction;
+import com.example.ambulanceapp.models.UserModel;
 import com.example.ambulanceapp.services.ValidateInput;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -84,7 +82,7 @@ public class Auth_service {
             reqPassShow(req2, false);
         }
 
-        if(pass.matches(ValidateInput.regexAtleastSymbol)){
+        if(matcherSym.matches()){
             reqPassShow(req3, true);
         }else{
             reqPassShow(req3, false);
@@ -110,17 +108,8 @@ public class Auth_service {
             textview.setTextColor(textview.getResources().getColor(R.color.black));
         }
     }
-    public void passwordViewer (EditText passwordHolder, ImageView btn){
-        int passwordCurrentState = passwordHolder.getInputType();
 
-        if(passwordCurrentState == InputType.TYPE_TEXT_VARIATION_PASSWORD){
-            btn.setImageResource(R.drawable.ic_eye_open);
-            passwordHolder.setInputType(InputType.TYPE_CLASS_TEXT);
-            Toast.makeText(authContext, "visible", Toast.LENGTH_SHORT).show();
-        }else{
-            btn.setImageResource(R.drawable.ic_eye_close);
-            passwordHolder.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-            Toast.makeText(authContext, "not visible", Toast.LENGTH_SHORT).show();
-        }
+    public void finalRegistration (UserModel user){
+
     }
 }

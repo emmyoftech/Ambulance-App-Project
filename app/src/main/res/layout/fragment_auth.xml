@@ -13,7 +13,7 @@
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:src="@mipmap/ic_back"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/select_user_view"
@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:orientation="vertical"
-        android:visibility="visible"
+        android:visibility="gone"
         >
 
         <TextView
@@ -99,6 +99,7 @@
     </LinearLayout>
 
 <!--  SIGN UP CONTAINER USER/ADMIN   -->
+
     <LinearLayout
         android:id="@+id/auth_form"
         android:layout_width="match_parent"
@@ -337,4 +338,54 @@
             android:layout_marginTop="30dp"
             android:textSize="17sp"/>
     </LinearLayout>
+
+<!--  SECRET  -->
+    <LinearLayout
+        android:id="@+id/secretKeyContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bck_btn"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="297dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/secretTextHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/anton"
+            android:text="@string/secretkeytitle"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textSize="35sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="20dp"
+            android:paddingHorizontal="20dp"
+            android:text="@string/secretkeytext"
+            android:textAlignment="center"
+            android:textSize="22sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/secretKeyHolder"
+            android:layout_gravity="center_horizontal"
+            android:textSize="40sp"/>
+
+        <Button
+            android:id="@+id/finalregbutton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_gravity="center_horizontal"
+            android:backgroundTint="@color/primary"
+            android:text="@string/finisedText"
+            android:textAllCaps="true"
+            android:layout_marginTop="50dp"/>
+
+    </LinearLayout>
+
 </RelativeLayout>

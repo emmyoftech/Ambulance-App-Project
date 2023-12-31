@@ -7,8 +7,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import com.example.ambulanceapp.R;
+import com.example.ambulanceapp.models.UserModel;
 import com.example.ambulanceapp.services.AppData;
 import com.example.ambulanceapp.services.CustomListener;
 import com.example.ambulanceapp.services.ValidateInput;
@@ -79,14 +79,8 @@ public class authMain {
         CustomListener.onInput(las_name_field, (e) -> service.reg1Validation(las_name_field, las_err_msg_holder, () -> form1InputChecker(fir_name_field, las_name_field, phn_field)));
         CustomListener.onInput(phn_field, (e) -> service.reg1Validation(phn_field, phn_err_msg_holder, () -> form1InputChecker(fir_name_field, las_name_field, phn_field)));
 
-        submitButton.setOnClickListener(v -> {
-            if(!ValidateInput.isInputEmpty(fir_name_field) && !ValidateInput.isInputEmpty(las_name_field) && ValidateInput.isPhoneNumberValid(phn_field)){
-                regStage2(head_image, title_header, ValidateInput.fieldExtractor(fir_name_field), ValidateInput.fieldExtractor(las_name_field), ValidateInput.fieldExtractor(phn_field));
-            }else{
-                // TODO: Add proper error dialog model
-                Toast.makeText(appContext, "Something went wrong" , Toast.LENGTH_SHORT).show();
-            }
-        });
+
+        submitButton.setOnClickListener(v -> regStage2(head_image, title_header, ValidateInput.fieldExtractor(fir_name_field), ValidateInput.fieldExtractor(las_name_field), ValidateInput.fieldExtractor(phn_field)));
         service.button_unclickable(submitButton);
     }
     private void regStage2 (ImageView regImage, TextView headtitle, String first_name, String last_name, String phone_number){
@@ -114,6 +108,20 @@ public class authMain {
         CustomListener.onInput(usernameHolder, (e)-> service.usernameValidInputEvent(usernameHolder, userErrMsgHolder,() -> form2InputChecker(usernameHolder, passwordHolder, conpassHolder)));
         CustomListener.onInput(passwordHolder, (e)-> service.passwordValidInputEvent(passwordHolder,passreq1,passreq2,passreq3, ()-> form2InputChecker(usernameHolder, passwordHolder, conpassHolder)));
         CustomListener.onInput(conpassHolder , (e) -> service.con_passwordValidInputEvent(passwordHolder, conpassHolder, conpassErrMsgHolder, () -> form2InputChecker(usernameHolder, passwordHolder, conpassHolder)));
+        submitButton.setOnClickListener(v -> {
+            UserModel user = new UserModel(first_name, last_name, phone_number, ValidateInput.fieldExtractor(usernameHolder), ValidateInput.fieldExtractor(passwordHolder), this.userType);
+            regStage3(user);
+        });
+    }
+
+    public void regStage3 (UserModel user){
+        LinearLayout form_con = authView.findViewById(R.id.auth_form);
+        LinearLayout secretKeyLayout = authView.findViewById(R.id.secretKeyContainer);
+        Button finishBtn = authView.findViewById(R.id.finalregbutton);
+        form_con.setVisibility(View.GONE);
+        secretKeyLayout.setVisibility(View.VISIBLE);
+
+        finishBtn.setOnClickListener(v -> service.finalRegistration(user));
     }
     private void form2InputChecker (EditText username_view, EditText password_view, EditText con_password_view){
         String password = password_view.getText().toString(),
