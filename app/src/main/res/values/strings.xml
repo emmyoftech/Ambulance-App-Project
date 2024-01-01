@@ -21,10 +21,13 @@
     <string name="invalid_text">Invalid</string>
     <string name="secretkeytitle">secret key</string>
     <string name="secretkeytext">
-        This unique key will be used to verify your authencity, to change login inforamtion,
-        and have access to other parts of the app. Copy cause it can't be retrieved and so will
+        This unique key will be used to verify your authenticity, to change login information,
+        and have access to other parts of the app. Copy cause it cant be retrieved and so will
         the account.
     </string>
     <string name="secretKeyHolder">093-464</string>
     <string name="finisedText">finished</string>
+    <string name="warn">warning</string>
+    <string name="succces">success</string>
+    <string name="errorWord">error</string>
 </resources>

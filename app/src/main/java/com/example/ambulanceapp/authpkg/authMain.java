@@ -11,6 +11,7 @@ import com.example.ambulanceapp.R;
 import com.example.ambulanceapp.models.UserModel;
 import com.example.ambulanceapp.services.AppData;
 import com.example.ambulanceapp.services.CustomListener;
+import com.example.ambulanceapp.services.DIalogue;
 import com.example.ambulanceapp.services.ValidateInput;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -30,6 +31,9 @@ public class authMain {
         this.submitButton = view.findViewById(R.id.submit_button);
         this.service = new Auth_service(con);
         this.setListeners();
+        LinearLayout diaCon = authView.findViewById(R.id.dialogueContainer);
+        DIalogue dIalogue = new DIalogue(diaCon);
+        dIalogue.warn("Hello worl");
     }
     private void setListeners(){
         LinearLayout switchForAdmin = authView.findViewById(R.id.admin_pointer);
