@@ -30,4 +30,6 @@
     <string name="warn">warning</string>
     <string name="succces">success</string>
     <string name="errorWord">error</string>
+    <string name="loading">loading...</string>
+    <string name="cancel">cancel</string>
 </resources>

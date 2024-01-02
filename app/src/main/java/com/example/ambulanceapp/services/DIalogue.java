@@ -12,6 +12,10 @@ import android.widget.Toast;
 import com.example.ambulanceapp.R;
 import com.example.ambulanceapp.interfaces.PassedFunction;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 public class DIalogue {
     View dialogueView;
 
@@ -136,5 +140,41 @@ public class DIalogue {
             noFunction.run();
             closeDialogue();
         });
+    }
+
+    public void openLoader(){
+        openDialogue();
+        LinearLayout loader = dialogueView.findViewById(R.id.loader);
+        loader.setVisibility(View.VISIBLE);
+    }
+    public void openLoader(String loadText){
+        openDialogue();
+        TextView loadtext = dialogueView.findViewById(R.id.load_text);
+        LinearLayout loader = dialogueView.findViewById(R.id.loader);
+        loadtext.setText(loadText);
+        loader.setVisibility(View.VISIBLE);
+    }
+
+    public void openLoader(PassedFunction function){
+        openLoader();
+        Button canBtn = dialogueView.findViewById(R.id.cancelBtn);
+        ScheduledExecutorService executeService = Executors.newSingleThreadScheduledExecutor();
+        Runnable task = () -> {
+            canBtn.setVisibility(View.VISIBLE);
+            canBtn.setOnClickListener(v -> function.run());
+        };
+        executeService.schedule(task, 3, TimeUnit.SECONDS);
+        executeService.shutdown();
+    }
+
+    public void closeLoader(){
+        LinearLayout loader = dialogueView.findViewById(R.id.loader);
+        Button canBtn = dialogueView.findViewById(R.id.cancelBtn);
+        TextView loadtext = dialogueView.findViewById(R.id.load_text);
+        loader.setVisibility(View.GONE);
+        canBtn.setOnClickListener(v -> {});
+        canBtn.setVisibility(View.GONE);
+        loadtext.setText(dialogueView.getResources().getString(R.string.loading));
+        closeDialogue();
     }
 }

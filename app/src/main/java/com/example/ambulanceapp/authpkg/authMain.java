@@ -2,60 +2,45 @@ package com.example.ambulanceapp.authpkg;
 
 import android.content.Context;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.*;
 import com.example.ambulanceapp.R;
 import com.example.ambulanceapp.models.UserModel;
-import com.example.ambulanceapp.services.AppData;
-import com.example.ambulanceapp.services.CustomListener;
-import com.example.ambulanceapp.services.DIalogue;
-import com.example.ambulanceapp.services.ValidateInput;
+import com.example.ambulanceapp.services.*;
 import com.google.android.material.textfield.TextInputEditText;
 
-public class authMain {
-    private final View authView;
-    private final AppData appData;
+public class authMain extends MyCustomFragmentManager {
     private final Button submitButton;
-    private final Context appContext;
     private final Auth_service service;
     private String navigatedAt = "index";
     private String previouslyAt = "null";
     private String userType;
     public authMain(View view, Context con) {
-        this.authView = view;
-        this.appData = new AppData(con);
-        this.appContext = con;
+        super(view, con);
         this.submitButton = view.findViewById(R.id.submit_button);
         this.service = new Auth_service(con);
         this.setListeners();
-        LinearLayout diaCon = authView.findViewById(R.id.dialogueContainer);
-        DIalogue dIalogue = new DIalogue(diaCon);
-        dIalogue.warn("Hello worl");
     }
     private void setListeners(){
-        LinearLayout switchForAdmin = authView.findViewById(R.id.admin_pointer);
-        LinearLayout switchForUser = authView.findViewById(R.id.user_pointer);
+        LinearLayout switchForAdmin = fragView.findViewById(R.id.admin_pointer);
+        LinearLayout switchForUser = fragView.findViewById(R.id.user_pointer);
 
         switchForAdmin.setOnClickListener(v -> switchFromUserTypeView("admin"));
         switchForUser.setOnClickListener(v -> switchFromUserTypeView("user"));
     }
     private void switchFromUserTypeView(String usertype) {
-        LinearLayout container = authView.findViewById(R.id.select_user_view);
+        LinearLayout container = fragView.findViewById(R.id.select_user_view);
         container.setVisibility(View.GONE);
         this.userType = usertype;
         openFormFor(usertype);
     }
     private void openFormFor(String userType){
-        LinearLayout form_con = authView.findViewById(R.id.auth_form);
+        LinearLayout form_con = fragView.findViewById(R.id.auth_form);
         form_con.setVisibility(View.VISIBLE);
         hide_show_back_btn(false);
         regStage1(userType);
     }
     private void hide_show_back_btn (boolean hidden){
-        ImageView back_btn = authView.findViewById(R.id.bck_btn);
+        ImageView back_btn = fragView.findViewById(R.id.bck_btn);
         if(hidden){
             back_btn.setVisibility(View.GONE);
         }else{
@@ -63,16 +48,16 @@ public class authMain {
         }
     }
     private void regStage1 (String userType) {
-        TextView title_header = authView.findViewById(R.id.reg_main_title);
-        ImageView head_image = authView.findViewById(R.id.regimage);
-        EditText fir_name_field = authView.findViewById(R.id.fir_name_holder);
-        EditText las_name_field = authView.findViewById(R.id.las_name_holder);
-        EditText phn_field = authView.findViewById(R.id.phn_holder);
-        TextView fir_err_msg_holder = authView.findViewById(R.id.fir_err_msg_holder);
-        TextView las_err_msg_holder = authView.findViewById(R.id.las_err_msg_holder);
-        TextView phn_err_msg_holder = authView.findViewById(R.id.phn_err_msg_holder);
+        TextView title_header = fragView.findViewById(R.id.reg_main_title);
+        ImageView head_image = fragView.findViewById(R.id.regimage);
+        EditText fir_name_field = fragView.findViewById(R.id.fir_name_holder);
+        EditText las_name_field = fragView.findViewById(R.id.las_name_holder);
+        EditText phn_field = fragView.findViewById(R.id.phn_holder);
+        TextView fir_err_msg_holder = fragView.findViewById(R.id.fir_err_msg_holder);
+        TextView las_err_msg_holder = fragView.findViewById(R.id.las_err_msg_holder);
+        TextView phn_err_msg_holder = fragView.findViewById(R.id.phn_err_msg_holder);
 
-        title_header.setText(authView.getResources().getString(R.string.reg_pre_text).concat(" " + userType.toUpperCase()));
+        title_header.setText(fragView.getResources().getString(R.string.reg_pre_text).concat(" " + userType.toUpperCase()));
         if(userType.equals("user")){
             head_image.setImageResource(R.mipmap.user);
         }else{
@@ -88,23 +73,23 @@ public class authMain {
         service.button_unclickable(submitButton);
     }
     private void regStage2 (ImageView regImage, TextView headtitle, String first_name, String last_name, String phone_number){
-        LinearLayout regstage2Form = authView.findViewById(R.id.regstage2);
-        LinearLayout regstage1Form = authView.findViewById(R.id.regstage1);
+        LinearLayout regstage2Form = fragView.findViewById(R.id.regstage2);
+        LinearLayout regstage1Form = fragView.findViewById(R.id.regstage1);
 
         // textfiels
-        EditText usernameHolder = authView.findViewById(R.id.user_name_holder);
-        TextInputEditText passwordHolder = authView.findViewById(R.id.password_holder);
-        TextInputEditText conpassHolder = authView.findViewById(R.id.con_pass_holder);
+        EditText usernameHolder = fragView.findViewById(R.id.user_name_holder);
+        TextInputEditText passwordHolder = fragView.findViewById(R.id.password_holder);
+        TextInputEditText conpassHolder = fragView.findViewById(R.id.con_pass_holder);
         // err msg holders
-        TextView userErrMsgHolder = authView.findViewById(R.id.user_name_err_msg_field);
-        TextView conpassErrMsgHolder = authView.findViewById(R.id.con_pass_err_msg_field);
+        TextView userErrMsgHolder = fragView.findViewById(R.id.user_name_err_msg_field);
+        TextView conpassErrMsgHolder = fragView.findViewById(R.id.con_pass_err_msg_field);
         // password requirements fields
-        TextView passreq1 = authView.findViewById(R.id.pass_req1);
-        TextView passreq2 = authView.findViewById(R.id.pass_req2);
-        TextView passreq3 = authView.findViewById(R.id.pass_req3);
+        TextView passreq1 = fragView.findViewById(R.id.pass_req1);
+        TextView passreq2 = fragView.findViewById(R.id.pass_req2);
+        TextView passreq3 = fragView.findViewById(R.id.pass_req3);
 
         regImage.setImageResource(R.drawable.ic_user);
-        headtitle.setText(authView.getResources().getString(R.string.code_log_title_text).toUpperCase());
+        headtitle.setText(fragView.getResources().getString(R.string.code_log_title_text).toUpperCase());
         regstage1Form.setVisibility(View.GONE);
         regstage2Form.setVisibility(View.VISIBLE);
         service.button_unclickable(submitButton);
@@ -117,15 +102,21 @@ public class authMain {
             regStage3(user);
         });
     }
-
     public void regStage3 (UserModel user){
-        LinearLayout form_con = authView.findViewById(R.id.auth_form);
-        LinearLayout secretKeyLayout = authView.findViewById(R.id.secretKeyContainer);
-        Button finishBtn = authView.findViewById(R.id.finalregbutton);
+        LinearLayout form_con = fragView.findViewById(R.id.auth_form);
+        LinearLayout secretKeyLayout = fragView.findViewById(R.id.secretKeyContainer);
+        Button finishBtn = fragView.findViewById(R.id.finalregbutton);
+        TextView keyHolder = fragView.findViewById(R.id.secretKeyHold);
+        String secretKey = SecretKey.makeSecretKey();
         form_con.setVisibility(View.GONE);
         secretKeyLayout.setVisibility(View.VISIBLE);
-
-        finishBtn.setOnClickListener(v -> service.finalRegistration(user));
+        keyHolder.setText(secretKey);
+        hide_show_back_btn(true);
+        finishBtn.setOnClickListener(v -> {
+            api.createUser(user, secretKey, ()->{
+                this.selfDialogue.warn("Success");
+            });
+        });
     }
     private void form2InputChecker (EditText username_view, EditText password_view, EditText con_password_view){
         String password = password_view.getText().toString(),
@@ -155,5 +146,9 @@ public class authMain {
         }else{
             service.button_unclickable(submitButton);
         }
+    }
+
+    private void setLoginListeners(){
+
     }
 }

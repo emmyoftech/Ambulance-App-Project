@@ -4,13 +4,11 @@ import android.content.Context;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
-
 import com.example.ambulanceapp.R;
 import com.example.ambulanceapp.interfaces.PassedFunction;
 import com.example.ambulanceapp.models.UserModel;
+import com.example.ambulanceapp.services.API_DB;
 import com.example.ambulanceapp.services.ValidateInput;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -86,7 +84,6 @@ public class Auth_service {
             reqPassShow(req3, true);
         }else{
             reqPassShow(req3, false);
-            Toast.makeText(authContext, pass, Toast.LENGTH_SHORT).show();
         }
 
         finalValidation.run();
@@ -107,9 +104,5 @@ public class Auth_service {
         else {
             textview.setTextColor(textview.getResources().getColor(R.color.black));
         }
-    }
-
-    public void finalRegistration (UserModel user){
-
     }
 }
