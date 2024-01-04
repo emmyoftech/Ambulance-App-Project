@@ -11,6 +11,7 @@ public class SecretKeyModel {
         this.secret_key = secret_key;
     }
 
+    public SecretKeyModel(){}
     public String getId() {
         return id;
     }

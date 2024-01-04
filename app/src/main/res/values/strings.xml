@@ -32,4 +32,10 @@
     <string name="errorWord">error</string>
     <string name="loading">loading...</string>
     <string name="cancel">cancel</string>
+    <string name="welcomemessage">welcome,</string>
+    <string name="fp">forgot password</string>
+    <string name="logintext">login</string>
+    <string name="get_secret_key">Secret Key...</string>
+    <string name="get_verify_phone">Enter phone number</string>
+    <string name="title_head_get_secret_key">enter secret key</string>
 </resources>

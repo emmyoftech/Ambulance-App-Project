@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/auth_form"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="20dp"
+    android:orientation="vertical"
+    android:layout_centerInParent="true"
+    android:visibility="gone"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_gravity="center_horizontal"
+        app:cardCornerRadius="70dp">
+
+        <ImageView
+            android:id="@+id/regimage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/reg_main_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="25dp"
+        android:textAllCaps="true"
+        android:fontFamily="@font/anton"
+        android:textAlignment="center"
+        android:textSize="25sp" />
+
+    <!--   REGISTRATION PART 1     -->
+    <LinearLayout
+        android:id="@+id/regstage1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="visible"
+        >
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            app:cardCornerRadius="10dp">
+
+            <EditText
+                android:id="@+id/fir_name_holder"
+                android:layout_width="match_parent"
+                android:layout_height="48sp"
+                android:background="@color/secondary"
+                android:backgroundTint="@color/secondary"
+                android:hint="@string/get_fir_name"
+                android:inputType="text"
+                android:paddingHorizontal="15dp" />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/fir_err_msg_holder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="@color/primary"
+            />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            app:cardCornerRadius="10dp">
+
+            <EditText
+                android:id="@+id/las_name_holder"
+                android:layout_width="match_parent"
+                android:layout_height="48sp"
+                android:background="@color/secondary"
+                android:backgroundTint="@color/secondary"
+                android:hint="@string/get_las_name"
+                android:inputType="text"
+                android:paddingHorizontal="15dp" />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/las_err_msg_holder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="@color/primary"
+            />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            app:cardCornerRadius="10dp">
+
+            <EditText
+                android:id="@+id/phn_holder"
+                android:layout_width="match_parent"
+                android:layout_height="48sp"
+                android:background="@color/secondary"
+                android:backgroundTint="@color/secondary"
+                android:hint="@string/get_phn_number"
+                android:inputType="number"
+                android:paddingHorizontal="15dp" />
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/phn_err_msg_holder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="@color/primary"
+            />
+    </LinearLayout>
+
+    <!--   REGISTRATION PART 2     -->
+    <LinearLayout
+        android:id="@+id/regstage2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            app:cardCornerRadius="10dp">
+
+            <EditText
+                android:id="@+id/user_name_holder"
+                android:layout_width="match_parent"
+                android:layout_height="48sp"
+                android:background="@color/secondary"
+                android:backgroundTint="@color/secondary"
+                android:hint="@string/get_user_name"
+                android:inputType="text"
+                android:paddingHorizontal="15dp" />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/user_name_err_msg_field"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:textColor="@color/primary"
+            android:layout_gravity="bottom"
+            />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:boxBackgroundColor="@color/secondary"
+            app:passwordToggleEnabled="true"
+            app:boxCornerRadiusTopEnd="10dp"
+            app:boxCornerRadiusTopStart="10dp"
+            app:boxCornerRadiusBottomEnd="10dp"
+            app:boxCornerRadiusBottomStart="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/password_holder"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:inputType="textPassword"
+                android:hint="@string/get_pass"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/pass_req1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="@string/pass_req_1"
+            android:layout_marginVertical="10dp"
+            android:layout_marginHorizontal="20dp"
+            />
+
+        <TextView
+            android:id="@+id/pass_req2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="@string/pass_req_2"
+            android:layout_marginVertical="10dp"
+            android:layout_marginHorizontal="20dp"
+            />
+
+        <TextView
+            android:id="@+id/pass_req3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="@string/pass_req_3"
+            android:layout_marginVertical="10dp"
+            android:layout_marginHorizontal="20dp"
+            />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:passwordToggleEnabled="true"
+            app:boxBackgroundColor="@color/secondary"
+            app:boxCornerRadiusTopEnd="10dp"
+            app:boxCornerRadiusTopStart="10dp"
+            app:boxCornerRadiusBottomEnd="10dp"
+            app:boxCornerRadiusBottomStart="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/con_pass_holder"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:inputType="textPassword"
+                android:hint="@string/con_pass"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/con_pass_err_msg_field"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:textColor="@color/primary"
+            android:layout_gravity="bottom"
+            />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/submit_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/nxt"
+        android:backgroundTint="@color/primary"
+        android:textAllCaps="true"
+        android:layout_marginTop="30dp"
+        android:textSize="17sp"/>
+</LinearLayout>

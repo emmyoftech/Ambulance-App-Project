@@ -14,6 +14,6 @@ public class MyCustomFragmentManager {
         this.context = con;
         this.appLocalStorage = new AppData(con);
         this.selfDialogue = new DIalogue(view);
-        this.api = new API_DB(view);
+        this.api = new API_DB(view, selfDialogue);
     }
 }

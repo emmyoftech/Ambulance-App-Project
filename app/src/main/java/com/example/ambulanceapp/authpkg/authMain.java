@@ -1,24 +1,37 @@
 package com.example.ambulanceapp.authpkg;
 
 import android.content.Context;
+import android.text.InputType;
 import android.view.View;
 import android.widget.*;
 import com.example.ambulanceapp.R;
+import com.example.ambulanceapp.interfaces.PassedFunction;
+import com.example.ambulanceapp.models.SecretKeyModel;
 import com.example.ambulanceapp.models.UserModel;
 import com.example.ambulanceapp.services.*;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
+
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 public class authMain extends MyCustomFragmentManager {
     private final Button submitButton;
     private final Auth_service service;
-    private String navigatedAt = "index";
-    private String previouslyAt = "null";
     private String userType;
     public authMain(View view, Context con) {
         super(view, con);
+        if(appLocalStorage.getifloggedInBefore() == false) appLocalStorage.resetLocalData();
         this.submitButton = view.findViewById(R.id.submit_button);
         this.service = new Auth_service(con);
-        this.setListeners();
+        if(appLocalStorage.getifloggedInBefore()){
+            this.userType = appLocalStorage.getUserType();
+            service.goToLogin(view, fragView.findViewById(R.id.select_user_view), ()-> setUpLogin(appLocalStorage.getUserType()));
+        }else{
+            setListeners();
+        }
     }
     private void setListeners(){
         LinearLayout switchForAdmin = fragView.findViewById(R.id.admin_pointer);
@@ -102,7 +115,7 @@ public class authMain extends MyCustomFragmentManager {
             regStage3(user);
         });
     }
-    public void regStage3 (UserModel user){
+    private void regStage3 (UserModel user){
         LinearLayout form_con = fragView.findViewById(R.id.auth_form);
         LinearLayout secretKeyLayout = fragView.findViewById(R.id.secretKeyContainer);
         Button finishBtn = fragView.findViewById(R.id.finalregbutton);
@@ -114,7 +127,10 @@ public class authMain extends MyCustomFragmentManager {
         hide_show_back_btn(true);
         finishBtn.setOnClickListener(v -> {
             api.createUser(user, secretKey, ()->{
-                this.selfDialogue.warn("Success");
+                appLocalStorage.setLoggedInBefore(true);
+                appLocalStorage.setUserFirstName(user.getFirstName());
+                appLocalStorage.setUserType(user.getUserType());
+                selfDialogue.success("we are created");
             });
         });
     }
@@ -147,8 +163,166 @@ public class authMain extends MyCustomFragmentManager {
             service.button_unclickable(submitButton);
         }
     }
+    private void setUpLogin(String userType){
+        String userFIrstname = appLocalStorage.getFirstName() == null ? "user": appLocalStorage.getFirstName();
+        String welcomepremessage = fragView.getResources().getString(R.string.welcomemessage);
+        TextInputEditText usernamefield = fragView.findViewById(R.id.logUsernameHold);
+        TextInputEditText userPassfield = fragView.findViewById(R.id.logPassHold);
+        TextView fp_text_click = fragView.findViewById(R.id.fp_clickable);
+        Button logBtn = fragView.findViewById(R.id.logBtn);
+        fp_text_click.setOnClickListener(v -> forgot_password_or_ver_phoneNo_setup(fragView.findViewById(R.id.logFirstPage), "ph"));
+        if(userType.equals("user")){
+            service.imgTitleChange(fragView, R.mipmap.user, welcomepremessage + " " + userFIrstname);
+        }else{
+            service.imgTitleChange(fragView, R.mipmap.admin, welcomepremessage + " " + userFIrstname);
+        }
+        if(appLocalStorage.getUserId() != null){
+            api.getUserName(appLocalStorage.getUserId(), v -> {
+               UserModel user = (UserModel) v;
+               usernamefield.setText(user.getUserName());
+            });
+        }
 
-    private void setLoginListeners(){
+        logBtn.setOnClickListener(v -> {
+            if(ValidateInput.isInputEmpty(usernamefield)){
+                selfDialogue.warn("Username field cannot be left empty");
+            }else if(ValidateInput.isInputEmpty(userPassfield)){
+                selfDialogue.warn("Password field cannot be empty");
+            }else{
+                api.getAllUseers(v_data -> {
+                    ArrayList<UserModel> users = (ArrayList<UserModel>) v_data;
+                    UserModel foundUser = null;
+                    for(UserModel user: users){
+                        if(user.getUserName().equals(ValidateInput.fieldExtractor(usernamefield))){
+                            foundUser = user;
+                            break;
+                        }
+                    }
+                    if(foundUser != null){
+                        if(foundUser.getPassword().equals(ValidateInput.fieldExtractor(userPassfield))){
+                            appLocalStorage.setLoggedInBefore(true);
+                            appLocalStorage.setUserFirstName(foundUser.getFirstName());
+                            appLocalStorage.setUserType(foundUser.getUserType());
+                            appLocalStorage.setUserId(foundUser.getId());
+                            selfDialogue.success("You are logged in");
+                        }else{
+                            selfDialogue.warn("Password invalid");
+                        }
+                    }else{
+                        String pattern = "User by \"{0}\" does not exist";
+                        selfDialogue.warn(MessageFormat.format(pattern, ValidateInput.fieldExtractor(usernamefield)));
+                    }
+                }, false);
+            }
+        });
+    }
+    private void forgot_password_or_ver_phoneNo_setup(LinearLayout loginView, String state){
+        loginView.setVisibility(View.GONE);
+        fragView.findViewById(R.id.phn_sek_hold).setVisibility(View.VISIBLE);
+        Button secret_key_sub_button = fragView.findViewById(R.id.secret_key_btn);
+        TextInputEditText secretkeyHolder = fragView.findViewById(R.id.secretKeyinputfield);
+        TextInputLayout par = fragView.findViewById(R.id.secretKey_getPhn_inputfield);
+        if(state.equals("ph")){
+            par.setHint(R.string.get_phn_number);
+            service.imgTitleChange(fragView, R.drawable.ic_user, fragView.getResources().getString(R.string.get_verify_phone));
+            CustomListener.onInput(secretkeyHolder, v -> {
+                if(ValidateInput.fieldExtractor(secretkeyHolder).length() == 11){
+                    service.button_clickable(secret_key_sub_button);
+                }else{
+                    service.button_unclickable(secret_key_sub_button);
+                }
+            });
+            secret_key_sub_button.setOnClickListener(v -> {
+                selfDialogue.openLoader("Verifying phone number");
+                api.getAllPhoneNumbers(ph_list -> {
+                    selfDialogue.closeLoader();
+                    List<String> phnoneNumbers = (LinkedList<String>) ph_list;
+                    String foundNumber = null;
+                    for (String number: phnoneNumbers){
+                        if(number.equals(ValidateInput.fieldExtractor(secretkeyHolder))){
+                            foundNumber = number;
+                            break;
+                        }
+                    }
+                    if(foundNumber != null){
+                        forgot_password_or_ver_phoneNo_setup(loginView, foundNumber);
+                    }else{
+                        String pattern = "\"{0}\" no user has this number";
+                        String msg= MessageFormat.format(pattern, ValidateInput.fieldExtractor(secretkeyHolder));
+                        selfDialogue.warn(msg);
+                    }
+                });
+            });
+        }else{
+            secretkeyHolder.setText("");
+            par.setHint(R.string.get_secret_key);
+            service.imgTitleChange(fragView, R.mipmap.ic_pass_lock, fragView.getResources().getString(R.string.title_head_get_secret_key));
+            CustomListener.onInput(secretkeyHolder, (v)-> {
+                if(ValidateInput.fieldExtractor(secretkeyHolder).length() == 6){
+                    service.button_clickable(secret_key_sub_button);
+                }else {
+                    service.button_unclickable(secret_key_sub_button);
+                }
+            });
+            secret_key_sub_button.setOnClickListener(v -> api.getAllUseers(users -> {
+                ArrayList<UserModel> allUsers = (ArrayList<UserModel>) users;
+                UserModel foundUser = null;
+                for(UserModel user: allUsers){
+                    if(user.getPhoneNumber().equals(state)){
+                        foundUser = user;
+                        break;
+                    }
+                }
+                if(foundUser != null){
+                    api.getKey(foundUser.getId(), false, userkey -> {
+                        SecretKeyModel userKey = (SecretKeyModel) userkey;
+                        if(userKey.getSecret_key().equals(ValidateInput.fieldExtractor(secretkeyHolder))){
+                            chPassFunc(userKey.getUser_id(), fragView.findViewById(R.id.phn_sek_hold));
+                        }else{
+                            selfDialogue.warn("Key is invalid");
+                        }
+                    });
+                }
+            }, false));
+        }
+        service.button_unclickable(secret_key_sub_button);
+    }
+    private void chPassFunc(String userid, LinearLayout lasCon){
+        service.imgTitleChange(fragView, R.mipmap.ic_pass_lock, "enter new password");
+        lasCon.setVisibility(View.GONE);
+        fragView.findViewById(R.id.ch_pass_Container).setVisibility(View.VISIBLE);
+        TextInputEditText passwordHold = fragView.findViewById(R.id.ch_pass_holder);
+        TextInputEditText con_passwordHold = fragView.findViewById(R.id.ch_con_pass_holder);
+        TextView req1 = fragView.findViewById(R.id.ch_pass_req1),
+                req2 = fragView.findViewById(R.id.ch_pass_req2),
+                req3 = fragView.findViewById(R.id.ch_pass_req3),
+                con_err_msger = fragView.findViewById(R.id.ch_con_pass_err_msg);
+        Button subBtn = fragView.findViewById(R.id.ch_pass_btn);
 
+        PassedFunction pass = ()->{
+            if(!ValidateInput.isInputEmpty(passwordHold) && !ValidateInput.isInputEmpty(con_passwordHold)){
+                if(ValidateInput.isPasswordValid(passwordHold) && ValidateInput.ispasswordConfirmed(passwordHold, con_passwordHold)){
+                    service.button_clickable(subBtn);
+                }else{
+                    service.button_unclickable(subBtn);
+                }
+            }else{
+                service.button_unclickable(subBtn);
+            }
+        };
+
+        CustomListener.onInput(passwordHold, v -> service.passwordValidInputEvent(passwordHold,req1,req2,req3, () -> pass.run()));
+        CustomListener.onInput(con_passwordHold, v -> service.con_passwordValidInputEvent(passwordHold, con_passwordHold, con_err_msger, () -> pass.run()));
+        service.button_unclickable(subBtn);
+        subBtn.setOnClickListener(v -> {
+            try {
+                api.changePassword(userid, ValidateInput.fieldExtractor(passwordHold));
+                selfDialogue.success("Password changed successfully", ()-> {
+                    service.goToLogin(fragView, fragView.findViewById(R.id.logFirstPage), ()-> setUpLogin(this.userType));
+                });
+            }catch (Exception err){
+                selfDialogue.error(err.getMessage());
+            }
+        });
     }
 }

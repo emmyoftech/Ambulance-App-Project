@@ -17,18 +17,35 @@ public class AppData {
         editPref = preferences.edit();
     }
 
+//    GETTERS
     public String getUserType(){
         return preferences.getString("USER_TYPE", null);
     }
-    public boolean ifloggedInBefore (){
-        return preferences.getBoolean("USER_LOOGED_IN_BEFORE", false);
-    }
+    public boolean getifloggedInBefore (){return preferences.getBoolean("USER_LOOGED_IN_BEFORE", false);}
+    public String getFirstName(){return preferences.getString("USER_FIRST_NAME", null);};
+    public String getUserId(){return preferences.getString("USER_ID", null);}
+//    SETTERS
     public void setLoggedInBefore(boolean islogged){
         editPref.putBoolean("USER_LOOGED_IN_BEFORE", islogged);
-        editPref.commit();
+        editPref.apply();
     }
     public void setUserType(String state){
         editPref.putString("USER_TYPE", state);
         editPref.apply();
+    }
+    public void setUserFirstName (String name){
+        editPref.putString("USER_FIRST_NAME", name);
+        editPref.apply();
+    }
+    public void setUserId (String id){
+        editPref.putString("USER_ID", id);
+        editPref.apply();
+    }
+
+    public void resetLocalData(){
+        setUserId(null);
+        setLoggedInBefore(false);
+        setUserType(null);
+        setUserFirstName(null);
     }
 }

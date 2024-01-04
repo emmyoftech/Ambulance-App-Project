@@ -155,13 +155,13 @@ public class DIalogue {
         loader.setVisibility(View.VISIBLE);
     }
 
-    public void openLoader(PassedFunction function){
+    public void openLoader(PassedFunction cancelFunction){
         openLoader();
         Button canBtn = dialogueView.findViewById(R.id.cancelBtn);
         ScheduledExecutorService executeService = Executors.newSingleThreadScheduledExecutor();
         Runnable task = () -> {
             canBtn.setVisibility(View.VISIBLE);
-            canBtn.setOnClickListener(v -> function.run());
+            canBtn.setOnClickListener(v -> cancelFunction.run());
         };
         executeService.schedule(task, 3, TimeUnit.SECONDS);
         executeService.shutdown();

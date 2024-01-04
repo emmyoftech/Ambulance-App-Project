@@ -1,8 +1,11 @@
 package com.example.ambulanceapp.authpkg;
 
 import android.content.Context;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import com.example.ambulanceapp.R;
@@ -104,5 +107,29 @@ public class Auth_service {
         else {
             textview.setTextColor(textview.getResources().getColor(R.color.black));
         }
+    }
+
+    public void imgTitleChange (View view, int imageId, String title){
+        ImageView img = view.findViewById(R.id.logimage);
+        TextView textHolder = view.findViewById(R.id.logTitleTexe);
+
+        img.setImageResource(imageId);
+        textHolder.setText(title);
+    }
+    public void goToLogin (View view, LinearLayout currentPage, PassedFunction function){
+        LinearLayout loginPage = view.findViewById(R.id.loginPage);
+        currentPage.setVisibility(View.GONE);
+        loginPage.setVisibility(View.VISIBLE);
+        resetLogin(view);
+        function.run();
+    }
+    private void resetLogin(View view){
+        LinearLayout sec = view.findViewById(R.id.phn_sek_hold),
+                     ch_pass_Con = view.findViewById(R.id.ch_pass_Container),
+                     logFirestPage = view.findViewById(R.id.logFirstPage);
+        sec.setVisibility(View.GONE);
+        ch_pass_Con.setVisibility(View.GONE);
+        logFirestPage.setVisibility(View.VISIBLE);
+
     }
 }

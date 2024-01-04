@@ -18,6 +18,8 @@ public class UserModel {
         this.userType = userType;
     }
 
+    public UserModel(){}
+
     public void setId(String id){
         this.id = id;
     }
