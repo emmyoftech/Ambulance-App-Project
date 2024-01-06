@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         parent = findViewById(R.id.fragmentContainerView);
-
+        MainActivity.fragmentSwitcher.run("admin");
     }
         {
             MainActivity.func(this::switchFragView);
@@ -32,10 +32,12 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case "admin":
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragmentContainerView, adminFragment.newInstance("" , ""))
+                        .replace(R.id.fragmentContainerView, bodyFragment.newInstance("" , ""))
                         .commit();
+                break;
             default:
                 Snackbar.make(parent , "This is not available: " + fragName, Snackbar.LENGTH_LONG).show();
+                break;
         }
     }
 }

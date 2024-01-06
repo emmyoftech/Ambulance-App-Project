@@ -4,9 +4,10 @@
     <color name="secondary">#f0f0f0</color>
     <color name="white">#FFFFFFFF</color>
     <color name="black">#000000</color>
-    <color name="pal_green">#41cc46</color>
+    <color name="pal_green">#41CC46</color>
     <color name="pal_blue">#5198f1</color>
     <color name="pal_pink">#FFF6F4</color>
     <color name="pal_yellow">#ffca18</color>
     <color name="pal_transBlack">#1B000000</color>
+    <color name="pal_transGreen">#4F41CC46</color>
 </resources>

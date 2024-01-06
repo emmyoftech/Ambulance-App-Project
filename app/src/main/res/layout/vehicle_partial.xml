@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp">
+
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:background="@color/secondary"
+                android:layout_marginVertical="5dp"
+                android:hint="Vehicle name...">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/getVehiclename"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:background="@color/secondary"
+                android:layout_marginVertical="5dp"
+                android:hint="Vehicle type...">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/getVehicletype"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"/>
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+    <ImageView
+        android:id="@+id/reVechicle"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@mipmap/ic_minusicon"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="10dp"/>
+</LinearLayout>
+</TableRow>

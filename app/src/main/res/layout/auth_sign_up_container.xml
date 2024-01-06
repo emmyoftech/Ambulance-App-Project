@@ -115,6 +115,15 @@
             android:textSize="15sp"
             android:textColor="@color/primary"
             />
+
+        <TextView
+            android:id="@+id/sign_to_log"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="i already have an account"
+            android:textColor="@color/pal_blue"
+            android:textSize="20sp"
+            android:layout_gravity="end"/>
     </LinearLayout>
 
     <!--   REGISTRATION PART 2     -->

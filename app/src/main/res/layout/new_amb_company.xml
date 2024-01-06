@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/create_edit_amb_page"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:id="@+id/new_amb_back_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:background="#FFFFFF"
+        android:orientation="horizontal"
+        android:layout_marginBottom="20dp">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@mipmap/ic_back"
+            android:layout_gravity="center_vertical"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="Back"
+            android:layout_marginLeft="10dp"
+            android:textSize="20sp"/>
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/new_amb_back_btn">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/createTitile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:layout_marginTop="10dp"
+                android:textAllCaps="true"
+                android:textAlignment="center"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/ambHolder"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="visible"
+                        android:layout_below="@id/createTitile"
+                        android:orientation="vertical">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:boxCornerRadiusBottomEnd="10dp"
+                            app:boxCornerRadiusBottomStart="10dp"
+                            app:boxCornerRadiusTopEnd="10dp"
+                            app:boxCornerRadiusTopStart="10dp"
+                            android:layout_marginVertical="10dp"
+                            android:background="@color/secondary"
+                            android:hint="Enter Company name..">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/companyNamefield"
+                                android:layout_width="match_parent"
+                                android:layout_height="55dp" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:boxCornerRadiusBottomEnd="10dp"
+                            app:boxCornerRadiusBottomStart="10dp"
+                            app:boxCornerRadiusTopEnd="10dp"
+                            app:boxCornerRadiusTopStart="10dp"
+                            android:background="@color/secondary"
+                            android:layout_marginVertical="10dp"
+                            app:counterEnabled="true"
+                            app:counterMaxLength="100"
+                            android:hint="Description..">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/companyDescField"
+                                android:layout_width="match_parent"
+                                android:layout_height="150dp" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:boxCornerRadiusBottomEnd="10dp"
+                            app:boxCornerRadiusBottomStart="10dp"
+                            app:boxCornerRadiusTopEnd="10dp"
+                            app:boxCornerRadiusTopStart="10dp"
+                            android:background="@color/secondary"
+                            android:layout_marginVertical="10dp"
+                            android:hint="@string/get_phn_number">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:layout_width="match_parent"
+                                android:id="@+id/companyPhoneNumber"
+                                android:inputType="phone"
+                                android:layout_height="55dp"/>
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginVertical="10dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Address"
+                                android:textSize="16sp"
+                                android:layout_marginBottom="20dp"/>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/secondary"
+                                android:layout_marginVertical="5dp"
+                                android:hint="Enter Longtitude ( map )">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/longtitudeField"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="55dp" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/secondary"
+                                android:layout_marginVertical="5dp"
+                                android:hint="Enter Latitude ( map )">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/latitudeField"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="55dp" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/secondary"
+                                android:layout_marginVertical="5dp"
+                                android:hint="Enter Full Address">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/addressField"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="55dp" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                        </LinearLayout>
+
+                </LinearLayout>
+
+                    <LinearLayout
+                    android:id="@+id/vehicleuiholder"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Vehicles"
+                        android:textSize="16sp"
+                        android:layout_marginBottom="20dp"/>
+
+                    <TableLayout
+                        android:id="@+id/vehiclTable"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:stretchColumns="1">
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <LinearLayout
+                                    android:id="@+id/singleVehicleHold"
+                                    android:layout_width="300dp"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+                                    <com.google.android.material.textfield.TextInputLayout
+                                        android:layout_width="300dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginVertical="5dp"
+                                        android:background="@color/secondary"
+                                        android:hint="Vehicle name...">
+
+                                        <com.google.android.material.textfield.TextInputEditText
+                                            android:id="@+id/getVehiclename"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="55dp" />
+                                    </com.google.android.material.textfield.TextInputLayout>
+
+                                    <com.google.android.material.textfield.TextInputLayout
+                                        android:layout_width="300dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginVertical="5dp"
+                                        android:background="@color/secondary"
+                                        android:hint="Vehicle type...">
+
+                                        <com.google.android.material.textfield.TextInputEditText
+                                            android:id="@+id/getVehicletype"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="55dp" />
+                                    </com.google.android.material.textfield.TextInputLayout>
+                                </LinearLayout>
+
+                                <ImageView
+                                    android:id="@+id/vehAdder"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:src="@mipmap/ic_addicon"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginLeft="10dp"/>
+                            </LinearLayout>
+                        </TableRow>
+
+                    </TableLayout>
+                </LinearLayout>
+
+                    <LinearLayout
+                    android:id="@+id/landmarkuihold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Landmarks"
+                        android:textSize="16sp"
+                        android:layout_marginBottom="20dp"/>
+
+                    <TableLayout
+                        android:id="@+id/landmarkTable"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:stretchColumns="1">
+
+                        <TableRow
+                            android:id="@+id/singleLandMarkHold"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="70dp">
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:layout_width="300dp"
+                                    android:layout_height="wrap_content"
+                                    android:background="@color/secondary"
+                                    android:hint="Landmark">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/getLandmark"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="55dp" />
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                                <ImageView
+                                    android:id="@+id/lanadder"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginLeft="10dp"
+                                    android:src="@mipmap/ic_addicon" />
+                            </LinearLayout>
+                        </TableRow>
+
+                    </TableLayout>
+                </LinearLayout>
+                <Button
+                    android:id="@+id/mainCreate_Edit_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/primary"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginHorizontal="40dp"/>
+
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

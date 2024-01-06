@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,7 +20,16 @@ import java.util.concurrent.TimeUnit;
 public class DIalogue {
     View dialogueView;
 
-    public DIalogue(View  view){
+    public DIalogue(Context con, ViewGroup parent){
+        dialogueView = LayoutInflater.from(con).inflate(R.layout.dialogue, null);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT
+        );
+        dialogueView.setLayoutParams(layoutParams);
+        parent.addView(dialogueView);
+    }
+    public DIalogue (View view){
         dialogueView = view;
     }
 
@@ -108,7 +118,7 @@ public class DIalogue {
         setCLickerFormessageDialogue(function);
     }
 
-    public void askquuestion (String msg, PassedFunction function){
+    public void askquestion (String msg, PassedFunction function){
         openDialogue();
         LinearLayout quesContaner = dialogueView.findViewById(R.id.questionDialogue);
         TextView quesTextBody = dialogueView.findViewById(R.id.quesTextBody);
@@ -117,7 +127,7 @@ public class DIalogue {
         quesTextBody.setText(msg);
         quesBtnSetup(function);
     }
-    public void askquuestion (String msg, PassedFunction yesFunction, PassedFunction noFunction){
+    public void askquestion (String msg, PassedFunction yesFunction, PassedFunction noFunction){
         openDialogue();
         LinearLayout quesContaner = dialogueView.findViewById(R.id.questionDialogue);
         TextView quesTextBody = dialogueView.findViewById(R.id.quesTextBody);
@@ -129,16 +139,23 @@ public class DIalogue {
     private void quesBtnSetup(PassedFunction yesFunction){
         Button yesBtn = dialogueView.findViewById(R.id.yes_btn);
         Button noBtn = dialogueView.findViewById((R.id.no_btn));
-        yesBtn.setOnClickListener(v -> yesFunction.run());
+        yesBtn.setOnClickListener(v -> {
+            closeDialogue();
+            yesFunction.run();
+
+        });
         noBtn.setOnClickListener(v -> closeDialogue());
     }
     private void quesBtnSetup(PassedFunction yesFunction, PassedFunction noFunction){
         Button yesBtn = dialogueView.findViewById(R.id.yes_btn);
         Button noBtn = dialogueView.findViewById((R.id.no_btn));
-        yesBtn.setOnClickListener(v -> yesFunction.run());
-        noBtn.setOnClickListener(v -> {
-            noFunction.run();
+        yesBtn.setOnClickListener(v -> {
             closeDialogue();
+            yesFunction.run();
+        });
+        noBtn.setOnClickListener(v -> {
+            closeDialogue();
+            noFunction.run();
         });
     }
 

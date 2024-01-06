@@ -5,9 +5,13 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import com.example.ambulanceapp.interfaces.PassedFunction;
 import com.example.ambulanceapp.interfaces.PassedFunction_object;
+import com.example.ambulanceapp.models.AmbulanceCompanyModel;
+import com.example.ambulanceapp.models.LandmarkModel;
 import com.example.ambulanceapp.models.SecretKeyModel;
 import com.example.ambulanceapp.models.UserModel;
+import com.example.ambulanceapp.models.VechicleModel;
 import com.google.android.gms.common.api.Api;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,16 +27,56 @@ public class API_DB {
     private DatabaseReference dbRef;
     public static String userTable = "users";
     public static String secretKeyTable = "secret_table";
+    public static String AmbulaneCompanyTable = "amb_company_table";
+    public static String VehicleTable = "vehicle_table";
+    public static String LandMarkTable = "landmark_table";
     public API_DB (View view, DIalogue dialog){
         database = FirebaseDatabase.getInstance();
         this.dialog = dialog;
     }
-    private void createRow(Object data, String table, PassedFunction function, String rowId) {
+    public void getAllRows (String table ,PassedFunction_object functionObject){
+        ArrayList coms = new ArrayList();
+        dbRef = FirebaseDatabase.getInstance().getReference(table);
+        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot datasnapshot) {
+                for(DataSnapshot fetchedData: datasnapshot.getChildren()){
+                    Object com;
+                    switch (table){
+                        case "users": com = fetchedData.getValue(UserModel.class);break;
+                        case "secret_table": com = fetchedData.getValue(SecretKeyModel.class); break;
+                        case "amb_company_table": com = fetchedData.getValue(AmbulanceCompanyModel.class); break;
+                        case "vehicle_table": com = fetchedData.getValue(VechicleModel.class); break;
+                        default: com = fetchedData.getValue(LandmarkModel.class);break;
+                    }
+                    coms.add(com);
+                }
+                functionObject.run(coms);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                dialog.error(error.getDetails());
+            }
+        });
+    }
+
+    public void createRow(Object data, String table, PassedFunction function, String rowId) {
         dialog.openLoader();
         dbRef = database.getReference(table);
         dbRef.child(rowId).setValue(data).addOnCompleteListener(v -> {
             dialog.closeLoader();
             function.run();
+        });
+    }
+    public void deleteRow(String table, String rowid, PassedFunction function){
+        dbRef = FirebaseDatabase.getInstance().getReference();
+        String delPath = table + "/" + rowid;
+        dbRef.child(delPath).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                function.run();
+            }
         });
     }
     private void createRow(Object data, String table, PassedFunction function, String rowId, String loadText) {
@@ -136,5 +180,46 @@ public class API_DB {
         dbRef = database.getReference(API_DB.userTable);
         DatabaseReference table = dbRef.child(user);
         table.child("password").setValue(pass);
+    }
+    private static int vehhelper = 0;
+    private static int lanhelper = 0;
+    private static boolean conhelper = false;
+    private void reset (){
+        API_DB.vehhelper = 0;
+        API_DB.lanhelper = 0;
+        API_DB.conhelper = false;
+    }
+    public void CreateNewComany(AmbulanceCompanyModel com, ArrayList<VechicleModel> veh, ArrayList<LandmarkModel> lan, PassedFunction function){
+        String secKey = SecretKey.makeUniqueKey();
+        com.setId(secKey);
+        createRow(com,API_DB.AmbulaneCompanyTable,()->{
+            API_DB.conhelper = true;
+            for (int i = 0; i < veh.size(); i++) {
+                String secKey2 = SecretKey.makeUniqueKey();
+                VechicleModel  veeh = veh.get(i);
+                veeh.setId(secKey2);
+                veeh.setCompanyId(com.getId());
+                veeh.setCompanyName(com.getCompanyName());
+
+                createRow(veeh, API_DB.VehicleTable, ()->{
+                    if(API_DB.conhelper && API_DB.vehhelper == veh.size() && API_DB.lanhelper == lan.size()) {function.run(); reset();}
+                }, secKey2, "Registering " + veeh.getVechicleName());
+                API_DB.vehhelper++;
+            }
+
+            for(int j = 0; j < lan.size(); j++){
+                String secKey3 = SecretKey.makeUniqueKey();
+                LandmarkModel landMark = lan.get(j);
+                landMark.setId(secKey3);
+                landMark.setCompanyId(com.getId());
+                landMark.setCompanyName(com.getCompanyName());
+
+                createRow(landMark, API_DB.LandMarkTable, ()->{
+                    if(API_DB.conhelper && API_DB.vehhelper == veh.size() && API_DB.lanhelper == lan.size()) {function.run(); reset();}
+                }, secKey3, "Registering landmark");
+                API_DB.lanhelper++;
+            }
+            if(API_DB.conhelper && API_DB.vehhelper == veh.size() && API_DB.lanhelper == lan.size()) {function.run(); reset();}
+        },secKey, "Registering Company");
     }
 }

@@ -50,4 +50,20 @@ public class UserModel {
     public String getUserType() {
         return userType;
     }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 }

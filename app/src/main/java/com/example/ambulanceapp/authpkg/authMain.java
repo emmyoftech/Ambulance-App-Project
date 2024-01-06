@@ -23,7 +23,7 @@ public class authMain extends MyCustomFragmentManager {
     private String userType;
     public authMain(View view, Context con) {
         super(view, con);
-        if(appLocalStorage.getifloggedInBefore() == false) appLocalStorage.resetLocalData();
+        if(!appLocalStorage.getifloggedInBefore()) appLocalStorage.resetLocalData();
         this.submitButton = view.findViewById(R.id.submit_button);
         this.service = new Auth_service(con);
         if(appLocalStorage.getifloggedInBefore()){
@@ -69,6 +69,7 @@ public class authMain extends MyCustomFragmentManager {
         TextView fir_err_msg_holder = fragView.findViewById(R.id.fir_err_msg_holder);
         TextView las_err_msg_holder = fragView.findViewById(R.id.las_err_msg_holder);
         TextView phn_err_msg_holder = fragView.findViewById(R.id.phn_err_msg_holder);
+        fragView.findViewById(R.id.sign_to_log).setOnClickListener(v -> service.goToLogin(fragView, fragView.findViewById(R.id.auth_form), () -> setUpLogin(userType)));
 
         title_header.setText(fragView.getResources().getString(R.string.reg_pre_text).concat(" " + userType.toUpperCase()));
         if(userType.equals("user")){
@@ -130,7 +131,9 @@ public class authMain extends MyCustomFragmentManager {
                 appLocalStorage.setLoggedInBefore(true);
                 appLocalStorage.setUserFirstName(user.getFirstName());
                 appLocalStorage.setUserType(user.getUserType());
-                selfDialogue.success("we are created");
+                selfDialogue.success("account created successfully", ()-> {
+                    service.goToLogin(fragView, fragView.findViewById(R.id.auth_form), () -> setUpLogin(userType));
+                });
             });
         });
     }
