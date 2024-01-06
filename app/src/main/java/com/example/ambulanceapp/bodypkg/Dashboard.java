@@ -29,6 +29,7 @@ public class Dashboard {
         service = new Body_service(body.context);
         container.setVisibility(View.VISIBLE);
         setlisteners();
+        container.findViewById(R.id.SignOut).setOnClickListener(v -> MainActivity.fragmentSwitcher.run("auth"));
     }
 
     private void setlisteners (){
@@ -38,38 +39,54 @@ public class Dashboard {
         TableRow edVehicle = container.findViewById(R.id.editVehicle);
         TableRow edLandmark = container.findViewById(R.id.editLandmark);
 
-        service.un_clickable(edCom);
-        service.un_clickable(edVehicle);
-        service.un_clickable(edLandmark);
-        creCom.setOnClickListener(v -> parentClass.switcher(bodyMain.clear_edit_amb_page, Create_Edit_Amb.createState));
+        if(parentClass.appLocalStorage.getUserType().equals("user")){
+            edCom.setVisibility(View.GONE);
+            edProf.setVisibility(View.GONE);
+            edVehicle.setVisibility(View.GONE);
+            edLandmark.setVisibility(View.GONE);
+            TextView text = creCom.findViewById(R.id.userclick);
+            text.setText("View Ambulance Company");
 
-        edProf.setOnClickListener(c -> {
-            parentClass.switchEdit();
-        });
+            service.un_clickable(creCom);
+            parentClass.api.getAllRows(API_DB.AmbulaneCompanyTable, (v) -> {
+                ArrayList<AmbulanceCompanyModel> amp = (ArrayList<AmbulanceCompanyModel>) v;
+                if(amp.size() > 0){
+                    creCom.setOnClickListener(s -> parentClass.cycleSwitcher(bodyMain.cycle_page, amp, CyclePage.ArrayTypeAmbulanceCompany));
+                    service.clickable(creCom);
+                }
+            });
+        }else{
+            service.un_clickable(edCom);
+            service.un_clickable(edVehicle);
+            service.un_clickable(edLandmark);
+            creCom.setOnClickListener(v -> parentClass.switcher(bodyMain.clear_edit_amb_page, Create_Edit_Amb.createState));
 
-        parentClass.api.getAllRows(API_DB.AmbulaneCompanyTable, (v) -> {
-            ArrayList<AmbulanceCompanyModel> amp = (ArrayList<AmbulanceCompanyModel>) v;
-            if(amp.size() > 0){
-                edCom.setOnClickListener(s -> parentClass.cycleSwitcher(bodyMain.cycle_page, amp, CyclePage.ArrayTypeAmbulanceCompany));
-                service.clickable(edCom);
-            }
-        });
-        parentClass.api.getAllRows(API_DB.VehicleTable, (v) -> {
-            ArrayList<VechicleModel> vehs = (ArrayList<VechicleModel>) v;
-            if(vehs.size() > 0){
-                edVehicle.setOnClickListener( veh -> parentClass.cycleSwitcher(bodyMain.cycle_page, vehs, CyclePage.ArrayTypeVehicle));
-                service.clickable(edVehicle);
-            }
-        });
+            edProf.setOnClickListener(c -> {
+                parentClass.switchEdit();
+            });
 
-        parentClass.api.getAllRows(API_DB.LandMarkTable, (v) -> {
-            ArrayList<LandmarkModel> lands = (ArrayList<LandmarkModel>) v;
-            if(lands.size() > 0){
-                edLandmark.setOnClickListener(vLand -> parentClass.cycleSwitcher(bodyMain.cycle_page, lands, CyclePage.ArrayTypeLandmark));
-                service.clickable(edLandmark);
-            }
-        });
+            parentClass.api.getAllRows(API_DB.AmbulaneCompanyTable, (v) -> {
+                ArrayList<AmbulanceCompanyModel> amp = (ArrayList<AmbulanceCompanyModel>) v;
+                if(amp.size() > 0){
+                    edCom.setOnClickListener(s -> parentClass.cycleSwitcher(bodyMain.cycle_page, amp, CyclePage.ArrayTypeAmbulanceCompany));
+                    service.clickable(edCom);
+                }
+            });
+            parentClass.api.getAllRows(API_DB.VehicleTable, (v) -> {
+                ArrayList<VechicleModel> vehs = (ArrayList<VechicleModel>) v;
+                if(vehs.size() > 0){
+                    edVehicle.setOnClickListener( veh -> parentClass.cycleSwitcher(bodyMain.cycle_page, vehs, CyclePage.ArrayTypeVehicle));
+                    service.clickable(edVehicle);
+                }
+            });
+
+            parentClass.api.getAllRows(API_DB.LandMarkTable, (v) -> {
+                ArrayList<LandmarkModel> lands = (ArrayList<LandmarkModel>) v;
+                if(lands.size() > 0){
+                    edLandmark.setOnClickListener(vLand -> parentClass.cycleSwitcher(bodyMain.cycle_page, lands, CyclePage.ArrayTypeLandmark));
+                    service.clickable(edLandmark);
+                }
+            });
+        }
     }
-
-
 }

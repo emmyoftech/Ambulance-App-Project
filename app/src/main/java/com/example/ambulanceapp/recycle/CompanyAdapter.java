@@ -13,6 +13,7 @@ import com.example.ambulanceapp.R;
 import com.example.ambulanceapp.bodypkg.bodyMain;
 import com.example.ambulanceapp.models.AmbulanceCompanyModel;
 import com.example.ambulanceapp.services.API_DB;
+import com.example.ambulanceapp.services.AppData;
 import com.example.ambulanceapp.services.DIalogue;
 
 import java.util.ArrayList;
@@ -42,6 +43,12 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyRecycle> {
         holder.title.setText(comps.get(position).getCompanyName());
         holder.subText.setText(comps.get(position).getDescription().substring(0, 25).concat("..."));
         holder.editBtn.setOnClickListener(v -> parentClass.switcheramb("edit", comps.get(position)));
+        AppData ap = new AppData(context);
+        if(ap.getUserType().equals("user")){
+            holder.editBtn.setVisibility(View.GONE);
+            holder.deleteBtn.setVisibility(View.GONE);
+        }
+        holder.viewBtn.setOnClickListener(v -> parentClass.switchComView(comps.get(position)));
         holder.deleteBtn.setOnClickListener(v -> {
             parentClass.selfDialogue.askquestion("Are you sure you want to delete " + comps.get(position).getCompanyName().toUpperCase() + " ?", ()->{
                 parentClass.selfDialogue.openLoader("Deleting " + comps.get(position).getCompanyName().toUpperCase());
@@ -61,7 +68,7 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyRecycle> {
 
 class CompanyRecycle extends RecyclerView.ViewHolder {
 
-    TextView title, subText, editBtn, deleteBtn;
+    TextView title, subText, editBtn, deleteBtn, viewBtn;
 
     public CompanyRecycle (View com_cycle_view) {
         super(com_cycle_view);
@@ -69,6 +76,6 @@ class CompanyRecycle extends RecyclerView.ViewHolder {
         subText = com_cycle_view.findViewById(R.id.subText);
         editBtn = com_cycle_view.findViewById(R.id.edit_btn);
         deleteBtn = com_cycle_view.findViewById(R.id.del_btn);
-
+        viewBtn = com_cycle_view.findViewById(R.id.view_btn);
     }
 }

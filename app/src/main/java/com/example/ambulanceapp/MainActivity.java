@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         parent = findViewById(R.id.fragmentContainerView);
-        MainActivity.fragmentSwitcher.run("admin");
+        MainActivity.fragmentSwitcher.run("auth");
     }
         {
             MainActivity.func(this::switchFragView);

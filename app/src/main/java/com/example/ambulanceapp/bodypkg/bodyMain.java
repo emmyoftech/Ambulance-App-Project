@@ -26,7 +26,6 @@ public class bodyMain extends MyCustomFragmentManager {
         super(view, con);
         service = new Body_service(con);
         main_body = view.findViewById(R.id.main_body);
-//        switcheramb("edit", new AmbulanceCompanyModel());
         switcher(bodyMain.dashboard_page_name, null);
     }
     public void switcher (String page, String page_items){
@@ -77,5 +76,12 @@ public class bodyMain extends MyCustomFragmentManager {
         );
         main_body.addView(inflaated_view, lay);
         new EditUser(inflaated_view, this);
+    }
+    public void switchComView(AmbulanceCompanyModel com){
+        View inflaated_view;
+        if(main_body.getChildCount() > 0) main_body.removeViewAt(0);
+        inflaated_view = LayoutInflater.from(this.context).inflate(R.layout.company_view, null);
+        main_body.addView(inflaated_view);
+        new CompanyView(inflaated_view, this, com);
     }
 }

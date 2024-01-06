@@ -4,6 +4,8 @@ import android.content.Context;
 import android.text.InputType;
 import android.view.View;
 import android.widget.*;
+
+import com.example.ambulanceapp.MainActivity;
 import com.example.ambulanceapp.R;
 import com.example.ambulanceapp.interfaces.PassedFunction;
 import com.example.ambulanceapp.models.SecretKeyModel;
@@ -207,7 +209,7 @@ public class authMain extends MyCustomFragmentManager {
                             appLocalStorage.setUserFirstName(foundUser.getFirstName());
                             appLocalStorage.setUserType(foundUser.getUserType());
                             appLocalStorage.setUserId(foundUser.getId());
-                            selfDialogue.success("You are logged in");
+                            MainActivity.fragmentSwitcher.run("admin");
                         }else{
                             selfDialogue.warn("Password invalid");
                         }
